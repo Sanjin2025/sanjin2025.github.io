@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANJIN主页</title>
+    <!-- 使用柔和的系统字体，干净优雅 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f7f9fc 0%, #eef2f7 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            line-height: 1.5;
+            color: #1e2b3c;
+        }
+
+        .card {
+            max-width: 680px;
+            width: 100%;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2.2rem;
+            box-shadow: 0 25px 45px -12px rgba(0,20,40,0.25),
+                        0 1px 2px rgba(0,0,0,0.03),
+                        inset 0 0 0 1px rgba(255,255,255,0.7);
+            transition: all 0.2s ease;
+        }
+
+        /* 头像 / 装饰区 */
+        .avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #d9e2ef;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23344e6c"><circle cx="50" cy="46" r="26" opacity="0.2"/><circle cx="50" cy="42" r="24" fill="%23b1c9e8"/><circle cx="34" cy="36" r="4" fill="%23243b55"/><circle cx="66" cy="36" r="4" fill="%23243b55"/><path d="M38 56 Q50 68, 62 56" stroke="%23243b55" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="50" cy="70" r="6" fill="%23f4c9a4"/></svg>');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 8px 18px -6px rgba(0,32,64,0.15);
+            border: 3px solid rgba(255,255,255,0.6);
+        }
+        .greet {
+            font-size: 2rem;
+            font-weight: 480;
+            letter-spacing: -0.01em;
+            background: linear-gradient(130deg, #1d3b5c, #2a4d6e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .greet span {
+            font-size: 1rem;
+            background: none;
+            -webkit-text-fill-color: #657c9a;
+            display: block;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+            margin-top: 4px;
+        }
+
+        /* 分割线 轻柔 */
+        .divider {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #a0b8d0, #7f9bc0, #a0b8d0, transparent);
+            margin: 1.8rem 0 2rem 0;
+            opacity: 0.4;
+        }
+
+        /* 信息卡片 */
+        .info-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(2px);
+            padding: 0.9rem 1.5rem;
+            border-radius: 3rem;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 4px 8px rgba(0, 10, 20, 0.02);
+            transition: all 0.2s;
+        }
+        .info-item:hover {
+            background: rgba(255,255,255,0.8);
+            border-color: #cbd6e6;
+            box-shadow: 0 10px 18px -10px rgba(30,60,90,0.15);
+            transform: scale(1.01);
+        }
+        .icon-bg {
+            width: 46px;
+            height: 46px;
+            background: #e9eef5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #2c5779;
+            flex-shrink: 0;
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.9), 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .content {
+            font-size: 1.3rem;
+            font-weight: 450;
+            word-break: break-word;
+            color: #162b3a;
+        }
+        .content small {
+            font-size: 0.85rem;
+            color: #60758b;
+            margin-left: 8px;
+            font-weight: 380;
+        }
+        .sub-desc {
+            font-size: 0.95rem;
+            color: #446688;
+            margin-top: 2px;
+            font-weight: 380;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.8rem;
+        }
+        .badge {
+            background: #dee8f2;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #1e3f5e;
+            display: inline-block;
+            border: 1px solid white;
+        }
+
+        /* 兴趣标签区域 */
+        .interests-wrapper {
+            margin: 0.5rem 0 0.2rem;
+        }
+        .interests-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 1rem;
+            margin-top: 0.5rem;
+        }
+        .pill {
+            background: #dae5f2;
+            padding: 0.45rem 1.4rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 430;
+            color: #1d3e5c;
+            box-shadow: inset 0 1px 3px white, 0 3px 6px rgba(0,0,0,0.02);
+            transition: 0.1s ease;
+            border: 1px solid #fbfdff;
+        }
+        .pill:hover {
+            background: #c7d8ec;
+            color: #0f2b40;
+            transform: translateY(-2px);
+        }
+
+        /* 底部装饰和 GitHub 提示 */
+        .footer-note {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6a7e99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            border-top: 1px dashed #bacddc;
+            padding-top: 1.5rem;
+        }
+        .gh-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1e2f40;
+            color: white;
+            padding: 0.5rem 1.4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 450;
+            font-size: 0.9rem;
+            border: 1px solid #ffffff50;
+            transition: 0.2s;
+            box-shadow: 0 6px 12px -6px #102230;
+        }
+        .gh-link:hover {
+            background: #253c52;
+            transform: scale(1.02);
+            box-shadow: 0 10px 18px -8px #0f2b3b;
+        }
+        .gh-link i {
+            font-size: 1.2rem;
+            font-style: normal;
+            filter: drop-shadow(0 2px 2px black);
+        }
+
+        /* 简单响应式 */
+        @media (max-width: 450px) {
+            .card { padding: 1.8rem 1.2rem; }
+            .content { font-size: 1.1rem; }
+            .icon-bg { width: 40px; height: 40px; font-size: 1.3rem; }
+            .greet { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- 头部欢迎 + 小头像 (无实际意义但增加亲切感) -->
+        <div class="avatar-row">
+            <div class="avatar" title="✨ SANJIN · 个人空间"></div>
+            <div class="greet">
+                很高兴见到你 👋
+                <span>／ 个人主页 · SANJIN2025</span>
+            </div>
+        </div>
+
+        <!-- 清晰的三块信息: QQ / 邮箱 / 兴趣爱好 (突出显示) -->
+        <div class="info-grid">
+            
+            <!-- ① QQ 号区块 (突出显示) -->
+            <div class="info-item">
+                <div class="icon-bg">💬</div>
+                <div class="content">
+                    <strong>3770820891</strong> 
+                    <small>· 每日掉线</small>
+                    <div style="font-size: 1.6rem; font-weight: 540; letter-spacing: 0.5px; line-height: 1.3;">12345 67890</div>
+                    <div class="sub-desc">
+                        <span class="badge">📱 全天离开慢但🤔</span>
+                        <span class="badge">✨ 扩列/交流都🤔</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② 邮箱 (重要联系方式) -->
+            <div class="info-item">
+                <div class="icon-bg">✉️</div>
+                <div class="content">
+                    <strong>电子邮箱</strong> 
+                    <small>· 商务 / 闲聊</small>
+                    <div style="font-size: 1.3rem; font-weight: 460;">guohao_1999@outlook.com/sanjin_mc@outlook.com</div>
+                    <div style="font-family: 'Courier New', monospace; background: #ecf2f9; padding: 0.2rem 1rem; border-radius: 40px; margin-top: 6px; display: inline-block;">
+                        ✦ 为了方便机器人防抓取，请将 ·at· 替换为 @ ✦
+                    </div>
+                    <!-- 防爬友好写法：实际显示完整邮箱可使用js，但纯静态就按照这个规则，大多数人类能看懂 -->
+                    <div style="margin-top: 6px; font-size: 0.95rem;">👆 手动改成 @ 就是真实邮箱</div>
+                </div>
+            </div>
+
+            <!-- ③ 兴趣爱好 (重点区域，多标签+描述) 拆成更丰富的样式 -->
+            <div class="info-item" style="flex-wrap: wrap; padding: 1.2rem 1.5rem; border-radius: 2rem;">
+                <div class="icon-bg" style="align-self: flex-start; margin-top: 0.2rem;">🎯</div>
+                <div class="content" style="flex:1;">
+                    <strong>🧱家·列表</strong> 
+                    <small>· 保持救砖</small>
+                    
+                    <!-- 兴趣标签组 (直观) -->
+                    <div class="interests-wrapper">
+                        <div class="interests-pills">
+                            <span class="pill">甜菜手表破解砖家</span>
+                            <span class="pill">Root砖家</span>
+                            <span class="pill">9008启动！</span>
+                            <span class="pill">BootRom启动！</span>
+                            <span class="pill">fastboot启动！</span>
+                            <span class="pill">Minecraft Preview启动！全体起立</span>
+                            <span class="pill">C++小软件编写</span>
+                            <span class="pill">Magisk+LSposed启动！</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 兴趣小描述，更有生活感 -->
+                    <div style="margin-top: 1rem; color: #3d5f7f; background: rgba(255,255,255,0.7); padding: 0.7rem 1.2rem; border-radius: 2rem; font-size: 0.95rem; border:1px solid white;">
+                        📌 编写一些c++小软件
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 优雅分割线 -->
+        <hr class="divider">
+
+        <!-- footer 区域：明确 GitHub 静态托管 + 附加联系说明（再次轻量包含QQ + 邮箱 文字，让爬虫也能清晰捕获） -->
+        <div class="footer-note">
+            <span style="opacity: 0.75;">🌐 此页面托管于 GitHub Pages · 完全静态 · 2025</span>
+            <a href="#" class="gh-link" title="回到本仓库">
+                <i>🐙</i> GitHub 仓库
+            </a>
+        </div>
+        
+        <!-- 为了方便纯文本读者/机器人，在页面中保留机器可读的联系信息 (同时不影响美观) -->
+        <div style="font-size: 0.01px; opacity: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true">
+            QQ：3770820891
+            ｜ 邮箱：guohao_1999@outlook.com
+            ｜ xtc砖家 root砖家 9008-and-BootRom砖家
+        </div>
+        <!-- 额外的安全联系方式，不破坏设计，但利于关键词检索 -->
+    </div>
+
+    <!-- 点缀说明：真正部署时把邮箱和QQ换成你自己的即可 -->
+    <!-- ===== 定制指南 ===== 
+         1. 将 QQ 号 "12345 67890" 替换成你的QQ，注意保留空格或去掉都可以。
+         2. 邮箱部分将 hi·at·example.com 改为 yourname@yourdomain.com (如果担心爬虫，保持这种样式人类能懂；也可以直接写完整)
+         3. 兴趣标签可以随意增删改，文字、颜色等都十分灵活。
+         4. 头像部分是一个内联svg绘制的简单卡通风格，也可以换成自己的图片url (修改 .avatar 的 background-image)
+         5. 如果想移除 “请将 ·at· 替换为 @” 提示，直接把对应的div删掉即可。
+         6. 底部 GitHub 链接可以换成自己仓库的真实链接。
+    ===== -->
+</body>
+</html>
