@@ -1,0 +1,12 @@
+{
+  "magisk": {
+    "version": "11.45.14",
+    "versionCode": "114514",
+    "link": "https://github.com/topjohnwu/Magisk/releases/download/v30.6/Magisk-v30.6.apk",
+    "note": "https://github.com/topjohnwu/Magisk/releases/download/v30.6/notes.md"
+  },
+  "stub": {
+    "versionCode": "0",
+    "link": ""
+  }
+}
